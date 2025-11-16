@@ -186,5 +186,8 @@ button:hover {
     text-align: center;
 }
 
-
+html, body {
+    height: auto;
+    overflow: auto;
+}
 
