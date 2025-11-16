@@ -188,11 +188,3 @@ button:hover {
 
 
 
-html, body {
-    height: 100%;         /* ensure body and html take full viewport */
-    overflow: hidden;     /* prevents scrolling */
-}
-
-.hero {
-    height: calc(100% - 50px); /* full page minus nav bar height (adjust if needed) */
-}
