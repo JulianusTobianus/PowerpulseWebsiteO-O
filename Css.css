@@ -1,59 +1,198 @@
 body {
     background-color: khaki;
-    text-align: center;
-    font-family:cursive
-    
-}
-
-
-body {
-  margin: 0;
-  padding: 0;
-}
-
-h2, p {
-  margin: 10px;
+    font-family: cursive;
+    margin: 0;
+    padding: 0;
+    text-align: center; /* optional for headings, etc. */
 }
 
 ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333333;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #333333;
+    width: 100%;                 /* full width nav */
+    display: flex;
+    justify-content: flex-start; /* align items to the left */
+    align-items: center;
+    overflow: hidden;
 }
 
 ul li {
-  float:left;
+    float: none; /* remove float since flex handles layout */
 }
 
 ul li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
 
 ul li a:hover {
-  background-color: #111111;
+    background-color: #111111;
 }
 
+
 button {
-  background-color: #ade21b;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  font-size: 1.5rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+    background-color: #ade21b;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
+
 button:hover {
-  background-color: #6e9408;
+    background-color: #6e9408;
 }
+
 #number {
-  font-size: 2rem;
-  width: 50px;
-  text-align: center;
+    font-size: 2rem;
+    width: 50px;
+    text-align: center;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;    
+    margin: 10px 0;
+}
+
+.input-row {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    margin: 5px 0;
+}
+
+.input-row label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.flavor-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 3px 0;
+    font-size: 1.1rem;
+}
+
+.checkout-input {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    width: 250px; 
+}
+
+.checkout-input input {
+    margin-top: 5px;
+    padding: 5px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+/* Container to center the number selector and product info together */
+.product-selection {
+    display: flex;
+    flex-direction: column;  /* stack number selector on top, info below */
+    align-items: center;     /* horizontally center everything */
+    gap: 15px;               /* spacing between number selector and info */
+}
+
+.number-selector {
+    display: flex;
+    justify-content: center;  /* centers horizontally */
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;  /* optional spacing */
+}
+
+/* Optional styling for product info text */
+.product-info p {
+    margin: 5px 0;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+#volume-alert {
+    display: none;
+    color: white;
+    background-color: #e74c3c;
+    padding: 10px 15px;
+    margin-top: 5px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.suggestions-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.suggestion-box {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 15px;
+    width: 200px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.suggestion-box h5 {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.suggestion-box h6 {
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Hero section */
+.hero {
+    width: 100%;
+    height: calc(100% - 50px); /* full page minus nav bar */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* pushes title to top */
+    padding-top: 0;          /* remove extra space above */
+    background-color: khaki; /* solid background */
+    position: relative;
+}
+
+/* Motto/title in hero */
+.hero h1 {
+    color: white;            /* text is white */
+    font-size: 3rem;
+    margin-top: 10px;        /* small gap from nav bar */
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.7); /* subtle shadow for readability */
+    text-align: center;
+}
+
+
+
+html, body {
+    height: 100%;         /* ensure body and html take full viewport */
+    overflow: hidden;     /* prevents scrolling */
+}
+
+.hero {
+    height: calc(100% - 50px); /* full page minus nav bar height (adjust if needed) */
 }
