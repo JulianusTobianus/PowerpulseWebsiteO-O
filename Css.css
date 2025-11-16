@@ -168,26 +168,26 @@ button:hover {
 /* Hero section */
 .hero {
     width: 100%;
-    height: calc(100% - 50px); /* full page minus nav bar */
+    height: auto; /* Let it grow with content */
     display: flex;
     justify-content: center;
     align-items: flex-start; /* pushes title to top */
-    padding-top: 0;          /* remove extra space above */
-    background-color: khaki; /* solid background */
+    padding-top: 0;           /* remove extra space above */
+    background-color: khaki;  /* solid background */
     position: relative;
 }
 
 /* Motto/title in hero */
 .hero h1 {
-    color: white;            /* text is white */
+    color: white;             /* text is white */
     font-size: 3rem;
-    margin-top: 10px;        /* small gap from nav bar */
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.7); /* subtle shadow for readability */
+    margin-top: 10px;         /* small gap from nav bar */
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.7); /* subtle shadow */
     text-align: center;
 }
 
+/* Body / HTML */
 html, body {
     height: auto;
-    overflow: auto;
+    overflow: auto;           /* scrolling allowed */
 }
-
