@@ -1,4 +1,4 @@
-
+// --- Get saved data or defaults ---
 let number = Number(localStorage.getItem("savedNumber")) || 1;
 let order = JSON.parse(localStorage.getItem("drinkOrder")) || {
     volume: null,
@@ -6,7 +6,7 @@ let order = JSON.parse(localStorage.getItem("drinkOrder")) || {
     flavors: []
 };
 
-
+// --- Elements (page-specific checks) ---
 const numberDisplay = document.getElementById("number");
 const increaseBtn = document.getElementById("increase");
 const decreaseBtn = document.getElementById("decrease");
@@ -15,17 +15,20 @@ const priceSpan = document.getElementById("price");
 const productName = document.getElementById("product-name");
 const productPrice = document.getElementById("product-price");
 const volumeAlert = document.getElementById("volume-alert");
+const suggestionsDiv = document.getElementById("suggestions");
 
-const volumePrices = { "330ML": 2.0, "500ML": 3.0, "1L": 5.0, "1,5L": 6.5 };
-const containerPrices = { "Blikje": 0.5, "Flesje": 1.0 };
+// --- Prices ---
+const volumePrices = { "330ML": 1.5, "500ML": 2.5, "1L": 3.5, "1,5L": 5.0 };
+const containerPrices = { "Blikje": 1.0, "Flesje": 1.5 };
 const shippingCost = 5.75;
--
+
+// --- Update functions ---
 function updateNumberDisplay() {
-    numberDisplay.textContent = number;
+    if (numberDisplay) numberDisplay.textContent = number;
     localStorage.setItem("savedNumber", number);
-    updateSummary();
-    updateProductDisplay();
-    updateTotalPrice();
+    if (summaryDiv) updateSummary();
+    if (productName && productPrice) updateProductDisplay();
+    if (priceSpan) updateTotalPrice();
 }
 
 function updateSummary() {
@@ -44,7 +47,7 @@ function updateProductDisplay() {
         return;
     }
     productName.textContent = `${order.container} ${order.volume}`;
-    const basePrice = (volumePrices[order.volume] + containerPrices[order.container]);
+    const basePrice = volumePrices[order.volume] + containerPrices[order.container];
     productPrice.textContent = basePrice.toFixed(2);
 }
 
@@ -57,8 +60,8 @@ function updateTotalPrice() {
     priceSpan.textContent = total.toFixed(2);
 }
 
-
 function showVolumeAlert(message) {
+    if (!volumeAlert) return;
     volumeAlert.textContent = message;
     volumeAlert.style.display = "block";
     volumeAlert.style.opacity = 0;
@@ -69,8 +72,8 @@ function showVolumeAlert(message) {
     }, 3000);
 }
 
-
 function checkVolumeRestriction() {
+    if (!document.querySelectorAll) return;
     const volumes = document.querySelectorAll('input[name="volume"]');
     volumes.forEach(v => {
         if (order.container === "Blikje" && (v.value === "1L" || v.value === "1,5L")) {
@@ -87,10 +90,11 @@ function checkVolumeRestriction() {
     });
 }
 
+// --- Event listeners ---
 increaseBtn?.addEventListener("click", () => { number++; updateNumberDisplay(); });
 decreaseBtn?.addEventListener("click", () => { if (number > 1) { number--; updateNumberDisplay(); } });
 
-
+// Volume inputs
 document.querySelectorAll('input[name="volume"]').forEach(input => {
     if (input.value === order.volume) input.checked = true;
     input.addEventListener("change", () => {
@@ -98,10 +102,11 @@ document.querySelectorAll('input[name="volume"]').forEach(input => {
         localStorage.setItem("drinkOrder", JSON.stringify(order));
         checkVolumeRestriction();
         updateNumberDisplay();
+        if (suggestionsDiv) updateSuggestions();
     });
 });
 
-
+// Container inputs
 document.querySelectorAll('input[name="container"]').forEach(input => {
     if (input.value === order.container) input.checked = true;
     input.addEventListener("change", () => {
@@ -109,10 +114,11 @@ document.querySelectorAll('input[name="container"]').forEach(input => {
         localStorage.setItem("drinkOrder", JSON.stringify(order));
         checkVolumeRestriction();
         updateNumberDisplay();
+        if (suggestionsDiv) updateSuggestions();
     });
 });
 
-
+// Flavor inputs
 document.querySelectorAll('input[name="flavor"]').forEach(input => {
     if (order.flavors.includes(input.value)) input.checked = true;
     input.addEventListener("change", () => {
@@ -123,26 +129,35 @@ document.querySelectorAll('input[name="flavor"]').forEach(input => {
     });
 });
 
-checkVolumeRestriction();
-updateNumberDisplay();
-
-
-const suggestionsDiv = document.getElementById("suggestions");
-
-// Predefined flavor combos (can have more than 2 flavors)
-const flavorCombos = [
-    ["Aardbei", "Chocolade", "Vanille"],  // first suggestion
-    ["Mango", "Bosbes", "Banaan", "Matcha"] // second suggestion
+const allFlavors = [
+    "Mango", "Banaan", "Bosbes", "Chocolade", "Aardbei", "Vanille",
+    "Watermeloen", "Pindakaas", "Koffie", "Framboos", "Matcha"
 ];
 
 function updateSuggestions() {
     if (!suggestionsDiv || !order.volume || !order.container) return;
 
-    // Clear previous suggestions
     suggestionsDiv.innerHTML = "";
 
-    // Loop through the flavor combos
-    flavorCombos.forEach(combo => {
+    const numSuggestions = 3; // fixed number of suggestions
+
+    for (let i = 0; i < numSuggestions; i++) {
+        let combo = [];
+
+        // Include at least one of the user's selected flavors if any
+        if (order.flavors.length > 0) {
+            const userFlavor = order.flavors[Math.floor(Math.random() * order.flavors.length)];
+            combo.push(userFlavor);
+        }
+
+        // Fill the rest of the combo (total 2-4 flavors)
+        const targetLength = Math.floor(Math.random() * 3) + 2; // 2, 3, or 4 flavors
+        while (combo.length < targetLength) {
+            const randomFlavor = allFlavors[Math.floor(Math.random() * allFlavors.length)];
+            if (!combo.includes(randomFlavor)) combo.push(randomFlavor);
+        }
+
+        // Create suggestion box
         const suggestion = document.createElement("div");
         suggestion.className = "suggestion-box";
         suggestion.innerHTML = `
@@ -150,29 +165,11 @@ function updateSuggestions() {
             <h6>${combo.join(" + ")}</h6>
         `;
         suggestionsDiv.appendChild(suggestion);
-    });
+    }
 }
 
-// Call initially and whenever volume/container changes
-updateSuggestions();
 
-// Update suggestions when volume changes
-document.querySelectorAll('input[name="volume"]').forEach(input => {
-    input.addEventListener('change', () => {
-        order.volume = input.value;
-        localStorage.setItem("drinkOrder", JSON.stringify(order));
-        updateNumberDisplay();
-        updateSuggestions();
-    });
-});
-
-// Update suggestions when container changes
-document.querySelectorAll('input[name="container"]').forEach(input => {
-    input.addEventListener('change', () => {
-        order.container = input.value;
-        localStorage.setItem("drinkOrder", JSON.stringify(order));
-        checkVolumeRestriction();
-        updateNumberDisplay();
-        updateSuggestions();
-    });
-});
+// --- Initial setup ---
+checkVolumeRestriction();
+updateNumberDisplay();
+if (suggestionsDiv) updateSuggestions();
