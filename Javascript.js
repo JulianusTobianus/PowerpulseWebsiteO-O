@@ -1,4 +1,4 @@
-// --- Load number and order from localStorage ---
+
 let number = Number(localStorage.getItem("savedNumber")) || 1;
 let order = JSON.parse(localStorage.getItem("drinkOrder")) || {
     volume: null,
@@ -6,7 +6,7 @@ let order = JSON.parse(localStorage.getItem("drinkOrder")) || {
     flavors: []
 };
 
-// --- DOM Elements ---
+
 const numberDisplay = document.getElementById("number");
 const increaseBtn = document.getElementById("increase");
 const decreaseBtn = document.getElementById("decrease");
@@ -16,12 +16,10 @@ const productName = document.getElementById("product-name");
 const productPrice = document.getElementById("product-price");
 const volumeAlert = document.getElementById("volume-alert");
 
-// --- Prices ---
 const volumePrices = { "330ML": 2.0, "500ML": 3.0, "1L": 5.0, "1,5L": 6.5 };
 const containerPrices = { "Blikje": 0.5, "Flesje": 1.0 };
 const shippingCost = 5.75;
-
-// --- Update functions ---
+-
 function updateNumberDisplay() {
     numberDisplay.textContent = number;
     localStorage.setItem("savedNumber", number);
@@ -59,7 +57,7 @@ function updateTotalPrice() {
     priceSpan.textContent = total.toFixed(2);
 }
 
-// --- In-page alert ---
+
 function showVolumeAlert(message) {
     volumeAlert.textContent = message;
     volumeAlert.style.display = "block";
@@ -71,7 +69,7 @@ function showVolumeAlert(message) {
     }, 3000);
 }
 
-// --- Volume restrictions ---
+
 function checkVolumeRestriction() {
     const volumes = document.querySelectorAll('input[name="volume"]');
     volumes.forEach(v => {
@@ -89,11 +87,10 @@ function checkVolumeRestriction() {
     });
 }
 
-// --- Quantity buttons ---
 increaseBtn?.addEventListener("click", () => { number++; updateNumberDisplay(); });
 decreaseBtn?.addEventListener("click", () => { if (number > 1) { number--; updateNumberDisplay(); } });
 
-// --- Volume selection ---
+
 document.querySelectorAll('input[name="volume"]').forEach(input => {
     if (input.value === order.volume) input.checked = true;
     input.addEventListener("change", () => {
@@ -104,7 +101,7 @@ document.querySelectorAll('input[name="volume"]').forEach(input => {
     });
 });
 
-// --- Container selection ---
+
 document.querySelectorAll('input[name="container"]').forEach(input => {
     if (input.value === order.container) input.checked = true;
     input.addEventListener("change", () => {
@@ -115,7 +112,7 @@ document.querySelectorAll('input[name="container"]').forEach(input => {
     });
 });
 
-// --- Flavor selection ---
+
 document.querySelectorAll('input[name="flavor"]').forEach(input => {
     if (order.flavors.includes(input.value)) input.checked = true;
     input.addEventListener("change", () => {
@@ -126,7 +123,6 @@ document.querySelectorAll('input[name="flavor"]').forEach(input => {
     });
 });
 
-// --- Init ---
 checkVolumeRestriction();
 updateNumberDisplay();
 

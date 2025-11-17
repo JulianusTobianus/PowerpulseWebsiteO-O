@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winkelmandje</title>
+    <link rel="stylesheet" href="Css.css">
+</head>
+<body>
+    <ul class="Navigation">
+        <li><a href="index.html" class="A">Home</a></li>
+        <li><a href="info.html" class="A">Info</a></li>
+        <li><a href="Smaken.html" class="A">Smaken</a></li>
+         <li><a href="samenstellen.html"class="A">Samenstellen</a></li>
+        <li><a href="Hulppagina.html" class="A">Hulp</a></li>
+        <li><a href="Reviews.html" class="A">Reviews</a></li>
+        <li><a href="Winkelmandje.html" class="A">Winkelmandje</a></li>
+    </ul>
+
+    <a href="index.html"><h3>Home</h3></a>
+    <h3>Uw Winkelmandje</h3>
+
+    <!-- Quantity selector -->
+    <div>
+        <h5>Gekozen product:</h5>
+  <div>
+    <div class="product-selection">
+        <div class="number-selector">
+            <button id="decrease">-</button>
+            <span id="number">1</span>
+            <button id="increase">+</button>
+        </div>
+
+        <div id="summary"></div>
+</div>
+
+
+
+
+    <div id="summary"></div>
+
+    <div>
+        <h4>-----------------------------------------------------------------------------</h4>
+     <h5><span id="product-name">Nog niet gekozen</span>: €<span id="product-price">0.00</span></h5>
+        <h5>Verzendkosten: €5,75</h5>
+        <h4>Totaal:</h4>
+        <h5>€<span id="price">0.00</span></h5>
+    </div>
+
+    <h4>Onze Suggesties:</h4>
+<div id="suggestions" class="suggestions-container"></div>
+
+
+
+    <div>
+        <h4>BetaalMethodes</h4>
+        <h5>Ideal</h5><input type="radio" name="BetaalMethodes">
+        <h5>Paypal</h5><input type="radio" name="BetaalMethodes">
+        <h5>Creditcard</h5><input type="radio" name="BetaalMethodes">
+    </div>
+
+    <div>
+        <h3>Gegevens</h3>
+        <h4>Naam</h4><input type="search">
+        <h4>Achternaam</h4><input type="search">
+        <h4>Stad/Dorp</h4><input type="search">
+        <h4>Postcode</h4><input type="search">
+        <h4>Huisnummer</h4><input type="search">
+        <h4>Telefoonnummer/Email</h4><input type="search">
+    </div>
+
+    <div>
+        <a href="https://ideal.nl/" target="_blank"><h2>Betalen</h2></a>
+    </div>
+
+    <script src="Javascript.js"></script>
+</body>
+</html>
